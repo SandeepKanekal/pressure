@@ -1,0 +1,15 @@
+/.vscode/
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.toc
+*.out
+*.bbl
+*.blg
+*.run.xml
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.bbl-SAVE-ERROR
+*.bcf
