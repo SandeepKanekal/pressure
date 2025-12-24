@@ -2480,58 +2480,58 @@ Therefore, taking the gradients on both sides, we get
 \]
 
 \subsection{Separating mean and fluctuating flows}
-Let $\psi$ denote the time average function, that is,
+Let $\langle \rangle$ denote the time average function, that is,
 \[
-\psi(\vec{v}) = \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} \vec{v} \dd{t}
+\langle \vec{v} \rangle = \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} \vec{v} \dd{t}
 \]
 
 Before doing any of the calculations, it would help to obtain a few general results with the time average function. 
 
 Let $\vec{a}$ and $\vec{b}$ be any two vectors. We would like to find the time average of vector product $\vec{a} \cdot \nabla \vec{b}$
 \begin{align*}
-\psi (\vec{a} \cdot \nabla \vec{b}) &= \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} (\vec{a} \cdot \nabla \vec{b}) \dd{t} \\
+\langle \vec{a} \cdot \nabla \vec{b} \rangle &= \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} (\vec{a} \cdot \nabla \vec{b}) \dd{t} \\
 &= \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} \qty(\sum_{i = x, y, z} a_i \pdv{\vec{b}}{i}) \dd{t} \\
 &= \lim_{T \to \infty} \frac{1}{T} \sum_{i = x, y, z} \qty(\int_{0}^{T} a_i \pdv{\vec{b}}{i} \dd{t}) \\
-&= \sum_{i=x, y, z} {(\psi (\vec{a} \cdot \nabla \vec{b}))}_i 
+&= \sum_{i=x, y, z} {(\langle \vec{a} \cdot \nabla \vec{b} \rangle)}_i 
 \end{align*}
 where
 \[
-{(\psi (\vec{a} \cdot \nabla \vec{b}))}_i = \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} a_i \pdv{\vec{b}}{i} \dd{t}
+{(\langle \vec{a} \cdot \nabla \vec{b} \rangle)}_i = \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} a_i \pdv{\vec{b}}{i} \dd{t}
 \]
 
 Let $a$ be any time averaged vector which represents a steady state, therefore, is invariant with time. It can be easily verified that
 \[
-\psi(\vec{a}) = \vec{a}
+\langle \vec{a} \rangle = \vec{a}
 \]
 
 As found, the mean and the fluctations comprise the entire velocity field. Taking the time average of the field derivative of the velocity field, we get
 \[
-\psi \qty(\fdv{\vec{v}}) = \psi \qty(\pdv{\vec{v'}}{t}) + \psi(\vec{V} \cdot \nabla \vec{V}) + \psi(\vec{V} \cdot \nabla \vec{v'}) + \psi(\vec{v'} \cdot \nabla \vec{V}) + \psi(\vec{v'} \cdot \nabla \vec{v'})
+\langle \fdv{\vec{v}} \rangle = \langle \pdv{\vec{v'}}{t} \rangle + \langle \vec{V} \cdot \nabla \vec{V} \rangle + \langle \vec{V} \cdot \nabla \vec{v'} \rangle + \langle \vec{v'} \cdot \nabla \vec{V} \rangle + \langle \vec{v'} \cdot \nabla \vec{v'} \rangle
 \]
 
 As $\vec{v'}$ is constructed in such a way that it's time average is zero. The above expression, from the properties of the time average funciton condenses to
 \[
-\psi \qty(\fdv{\vec{v}}) = \vec{V} \cdot \nabla \vec{V} + \psi (\vec{v'} \cdot \nabla \vec{v'}) \tag{18.3.1}
+\langle \fdv{\vec{v}} \rangle = \vec{V} \cdot \nabla \vec{V} + \langle \vec{v'} \cdot \nabla \vec{v'} \rangle \tag{18.3.1}
 \]
 
 Note that
 \[
-\psi \qty(\fdv{\vec{v'}}) = \psi\qty(\pdv{\vec{v'}}{t}) + \psi((\vec{V} + \vec{v'}) \cdot \nabla \vec{v'}) = \psi(\vec{v'} \cdot \nabla \vec{v'})
+\langle \fdv{\vec{v'}} \rangle = \langle \pdv{\vec{v'}}{t} \rangle + \langle (\vec{V} + \vec{v'}) \cdot \nabla \vec{v'} \rangle = \langle \vec{v'} \cdot \nabla \vec{v'} \rangle
 \]
 
 From (18.1.2), we have
 \[
 \fdv{\vec{v'}} = - \nabla \bar{P} - \nabla P' + \nu \nabla^2 \vec{v'} + \nu \nabla^2 \vec{V} - \vec{V} \cdot \nabla \vec{V} - \vec{v'} \cdot \nabla \vec{V}
 \]
-Applying $\psi$ on both sides of the equation, we get
+Applying $\langle \rangle$ on both sides of the equation, we get
 \[
-\psi\qty(\fdv{\vec{v'}}) = -\nabla \bar{P} + \nu \nabla^2 \vec{V} - \vec{V} \cdot \nabla \vec{V}
+\langle \fdv{\vec{v'}} \rangle = -\nabla \bar{P} + \nu \nabla^2 \vec{V} - \vec{V} \cdot \nabla \vec{V}
 \]
 Note that these results look familiar to the momentum flux matrix terms. However, it will be dealt with a little later.
 
 Finally, we have
 \[
-\psi \qty(\fdv{\vec{v}}) = -\nabla \bar{P} + \nu \nabla^2 \vec{V} \tag{18.3.2}
+\langle \fdv{\vec{v}} \rangle = -\nabla \bar{P} + \nu \nabla^2 \vec{V} \tag{18.3.2}
 \]
 
 To verify this, we can use the fact that the whole field is a sum of the average and the fluctuating parts. Therefore from (18.1.1) and (18.2.1), we have
@@ -2539,13 +2539,13 @@ To verify this, we can use the fact that the whole field is a sum of the average
 \fdv{\vec{v}} = (-\nabla \bar{P} + \nu \nabla^2 \vec{V}) + (-\nabla P' + \nu \nabla^2 \vec{v'})
 \]
 
-Applying $\psi$ on both sides of the above equation, we get
+Applying $\langle \rangle$ on both sides of the above equation, we get
 \[
-\psi\qty(\fdv{\vec{v}}) = \psi(-\nabla \bar{P} + \nu \nabla^2 \vec{V}) + \psi(-\nabla P' + \nu \nabla^2 \vec{v'})
+\langle \fdv{\vec{v}} \rangle = \langle -\nabla \bar{P} + \nu \nabla^2 \vec{V} \rangle + \langle -\nabla P' + \nu \nabla^2 \vec{v'} \rangle
 \]
-Once again, from the properties of $\psi$, the above equation finally condenses to the following
+Once again, from the properties of $\langle \rangle$, the above equation finally condenses to the following
 \[
-\psi\qty(\fdv{\vec{v}}) = -\nabla \bar{P} + \nu \nabla^2 \vec{V}
+\langle \fdv{\vec{v}} \rangle = -\nabla \bar{P} + \nu \nabla^2 \vec{V}
 \]
 
 Which is exactly what we calculated. Therefore, the result is correct.
@@ -2553,20 +2553,20 @@ Which is exactly what we calculated. Therefore, the result is correct.
 \subsection{Turbulence stress matrix}
 From (18.3.1), we have the result
 \[
-\psi \qty(\fdv{\vec{v}}) = -\nabla \bar{P} + \psi(\vec{v'} \cdot \nabla \vec{v'})
+\langle \fdv{\vec{v}} \rangle = -\nabla \bar{P} + \langle \vec{v'} \cdot \nabla \vec{v'} \rangle
 \]
 Note that the first term is a steady state pressure gradient term and the second one is a fluctuating stress term. I would like to define the turbulence stress matrix as
 \[
-\nabla \cdot \bm{T} = \psi(\vec{v'} \cdot \nabla \vec{v'})
+\nabla \cdot \bm{T} = \langle \vec{v'} \cdot \nabla \vec{v'} \rangle
 \]
 Following arguments similar to those in section 9.3 (Conservation of momentum), we arrive at the following
 \[
-\bm{T} = \psi(\vec{v'} \vec{v'}^T) \tag{18.4.1}
+\bm{T} = \langle \vec{v'} \vec{v'}^T \rangle \tag{18.4.1}
 \]
 
 I would also like to define a `Total Turbulence Matrix', which also accounts for the pressure term in the equation. Therefore, defining the matrix as $\bm{\kappa}$, we have
 \[
-\nabla \cdot \bm{\kappa} = -\nabla \bar{P} + \psi(\vec{v'} \cdot \nabla \vec{v'}) = \psi(-\nabla \bar{P}) + \psi(\vec{v'} \cdot \nabla \vec{v'})
+\nabla \cdot \bm{\kappa} = -\nabla \bar{P} + \langle \vec{v'} \cdot \nabla \vec{v'} \rangle = \langle -\nabla \bar{P} \rangle + \langle \vec{v'} \cdot \nabla \vec{v'} \rangle
 \]
 Once again, following the arguments similar to those of section 9.3, we arrive at the following
 \[
@@ -2586,11 +2586,11 @@ Taking the field derivative of the mean velocity field, we get
 \]
 From (18.1.3), the time average of the field derivative of the full velocity field is
 \[
-\psi \qty(\fdv{\vec{v}}) = \pdv{\vec{V}}{t} + \vec{V} \cdot \nabla \vec{V} + \psi(\vec{v'} \cdot \nabla \vec{v'})
+\langle \fdv{\vec{v}} \rangle = \pdv{\vec{V}}{t} + \vec{V} \cdot \nabla \vec{V} + \langle \vec{v'} \cdot \nabla \vec{v'} \rangle
 \]
 Which implies that
 \[
-\pdv{\vec{V}}{t} + \vec{V} \cdot \nabla \vec{V} = \psi\qty(\fdv{\vec{v}}) - \psi(\vec{v'} \cdot \nabla \vec{v'})
+\pdv{\vec{V}}{t} + \vec{V} \cdot \nabla \vec{V} = \langle \fdv{\vec{v}} \rangle - \langle \vec{v'} \cdot \nabla \vec{v'} \rangle
 \]
 From (18.3.2) and (18.4.1), we have
 \[
@@ -2671,46 +2671,46 @@ This equation is valid by the fact that $\pdv{\vec{w}}{t} = \pdv{\vec{w'}}{t}$, 
 
 However, we are interested in finding out the steady state average of these values. Therefore, applying the average function on both sides, we get
 \begin{gather*}    
-\psi\qty(\pdv{\vec{w'}}{t}) = 0 \\
-\psi(\vec{v} \cdot \nabla \vec{w}) = \vec{V} \cdot \nabla \vec{W} + \psi(\vec{v'} \cdot \nabla \vec{w'}) \\
-\psi(\vec{w} \cdot \nabla \vec{v}) = \vec{W} \cdot \nabla \vec{V} + \psi(\vec{w'} \cdot \nabla \vec{v'}) \\
-\psi(\nu \nabla^2 \vec{w}) = \nu \nabla^2 \vec{W}
+\langle\pdv{\vec{w'}}{t}\rangle = 0 \\
+\langle\vec{v} \cdot \nabla \vec{w}\rangle = \vec{V} \cdot \nabla \vec{W} + \langle\vec{v'} \cdot \nabla \vec{w'}\rangle \\
+\langle\vec{w} \cdot \nabla \vec{v}\rangle = \vec{W} \cdot \nabla \vec{V} + \langle\vec{w'} \cdot \nabla \vec{v'}\rangle \\
+\langle\nu \nabla^2 \vec{w}\rangle = \nu \nabla^2 \vec{W}
 \end{gather*}
 Therefore, we have
 \[
-\vec{V} \cdot \nabla \vec{W} + \psi(\vec{v'} \cdot \nabla \vec{w'}) = \vec{W} \cdot \nabla \vec{V} + \psi(\vec{w'} \cdot \nabla \vec{v'}) + \nu \nabla^2 \vec{W}
+\vec{V} \cdot \nabla \vec{W} + \langle\vec{v'} \cdot \nabla \vec{w'}\rangle = \vec{W} \cdot \nabla \vec{V} + \langle\vec{w'} \cdot \nabla \vec{v'}\rangle + \nu \nabla^2 \vec{W}
 \]
 Rearranging, we get
 \[
-\psi(\vec{v'} \cdot \nabla \vec{w'} - \vec{w'} \cdot \nabla \vec{v'}) = \vec{W} \cdot \nabla \vec{V} - \vec{V} \cdot \nabla \vec{W} + \nu \nabla^2 \vec{W}
+\langle\vec{v'} \cdot \nabla \vec{w'} - \vec{w'} \cdot \nabla \vec{v'}\rangle = \vec{W} \cdot \nabla \vec{V} - \vec{V} \cdot \nabla \vec{W} + \nu \nabla^2 \vec{W}
 \]
 From (18.6.1), the right hand side of the above equation is 0, which implies
 \[
-\psi(\vec{v'} \cdot \nabla \vec{w'} - \vec{w'} \cdot \nabla \vec{v'}) = 0
+\langle\vec{v'} \cdot \nabla \vec{w'} - \vec{w'} \cdot \nabla \vec{v'}\rangle = 0
 \]
 Using the vector identity $\vec{v'} \cdot \nabla \vec{w'} - \vec{w'} \cdot \nabla \vec{v'} = \nabla \times (\vec{v'} \times \vec{w'})$, we have
 \[
-\psi(\nabla \times (\vec{v'} \times \vec{w'})) = 0
+\langle\nabla \times (\vec{v'} \times \vec{w'})\rangle = 0
 \]
 which implies
 \[
-\nabla \times \psi(\vec{v'} \times \vec{w'}) = 0
+\nabla \times \langle\vec{v'} \times \vec{w'}\rangle = 0
 \]
 Thus, in steady state, the averaged turbulent vortex flux is irrotational
 \[
-\psi(\vec{v'} \times \vec{w'}) = \nabla u
+\langle\vec{v'} \times \vec{w'}\rangle = \nabla u
 \]
 where \(u\) is some scalar
 
 Once again, it would be useful to write the above terms in terms of divergences of 2 matrices (turbulent flux matrices). These matrices encode the steady state correlations between the velocity and the vorticity fluctuations. Let the matrices be $\bm{F}_{vw}$ and $\bm{F}_{wv}$. Therefore
 \begin{gather*}
-    \nabla \cdot \bm{F}_{vw} = \psi(\vec{v'} \cdot \nabla \vec{w'}) \\
-    \nabla \cdot \bm{F}_{wv} = \psi(\vec{w'} \cdot \nabla \vec{v'})
+    \nabla \cdot \bm{F}_{vw} = \langle\vec{v'} \cdot \nabla \vec{w'}\rangle \\
+    \nabla \cdot \bm{F}_{wv} = \langle\vec{w'} \cdot \nabla \vec{v'}\rangle
 \end{gather*}
 As $\nabla \cdot \vec{v'} = \nabla \cdot \vec{w'} = 0$ (from incompressibility and the construction of the vorticity field), we get
 \begin{gather*}
-    \bm{F}_{vw} = \psi(\vec{v'}\vec{w'}^T) \\
-    \bm{F}_{wv} = \psi(\vec{w'}\vec{v'}^T)
+    \bm{F}_{vw} = \langle\vec{v'}\vec{w'}^T\rangle \\
+    \bm{F}_{wv} = \langle\vec{w'}\vec{v'}^T\rangle
 \end{gather*}
 Defining
 \[
@@ -2722,7 +2722,175 @@ we have the final form of the equation
 \]
 Note that this is identical to the result obtained with the vector $\vec{v'} \times \vec{w'}$. That is
 \[
-\nabla \cdot \bm{F} = \nabla \times \psi(\vec{v'} \times \vec{w'})
+\nabla \cdot \bm{F} = \nabla \times \langle\vec{v'} \times \vec{w'}\rangle
 \]
+
+\subsection{Compressible fluid version}
+Now, let the assumption that the fluid is incompressible be let go. It is obvious from (18.5.2) that the new tensor elements would have to be of the form $\langle \rho v_i v_j \rangle$. The compressible version of the force equation is given by
+\[
+\partial_t (\rho v_i) + \partial_j (\rho v_i v_j) = -\partial_i p + \partial_j \sigma_{ij}
+\]
+where $\sigma_{ij}$ is the $ij$-th element of the stress tensor. The turbulence tensor is only concerned with the momentum flux term.
+
+Consider the term $\rho v_i v_j$ subject to the decomposition made in the previous sections, we have then
+\[
+\rho v_i v_j = \rho (\bar{v_i} + v_i') (\bar{v_j} + v_j')
+\]
+Taking the average on both sides, we get
+\[
+\langle \rho v_i v_j \rangle = \langle \rho \bar{v_i} \bar{v_j} \rangle + \langle \rho \bar{v_i} v_j' \rangle + \langle \rho v_i' \bar{v_j} \rangle + \langle \rho v_i' v_j' \rangle
+\]
+However, the properties of the average does not allow the second and third terms to just drop to 0. Therefore, a new definition of the decomposition must be made.
+Define
+\[
+v_i = \tilde{v_i} + v_i'' \tag{18.7.1}
+\]
+where
+\[
+\tilde{v_i} = \frac{\langle \rho v_i \rangle}{\langle \rho \rangle}
+\]
+This decomposition makes sense because it weights the average velocity with the density. If the fluid were incompressible, we then have
+\[
+\tilde{v_i} = \frac{\langle \rho v_i \rangle}{\langle \rho \rangle} = \frac{\rho \langle v_i \rangle}{\rho} = \langle v_i \rangle
+\]
+and
+\[
+v_i'' = v_i - \tilde{v_i}
+\]
+Note that
+\[
+\tilde{v_i''} = \frac{\langle \rho v_i'' \rangle}{\langle \rho \rangle} = 0 \implies \langle \rho v_i'' \rangle = 0
+\]
+
+By this decomposition, we have 
+\[
+\langle \rho v_i v_j \rangle = \langle \rho \rangle \tilde{v_i} \tilde{v_j} + \langle \rho v_i'' v_j'' \rangle \tag{18.7.2}
+\]
+
+Therefore, the new compressible turbulence stress tensor is given by
+\[
+\bm{T} = \langle \rho v_i'' v_j'' \rangle \tag{18.7.3}
+\]
+
+It is possible to verify the validity of this using the continuity equation. We wish to take the average of the continuity equation, therefore, we have
+\begin{gather*}
+\partial_t \rho + \partial_i (\rho v_i) = 0 \\
+\implies \partial_t \rho + \partial_i [\rho (\tilde{v_i} + v_i'')] = 0 \\
+\implies \partial_t \rho + \partial_i (\rho \tilde{v_i}) + \partial_i (\rho v_i'') = 0
+\end{gather*}
+Taking the average, we have
+\[
+\langle \partial_t \rho \rangle + \langle \partial_i (\rho \tilde{v_i}) \rangle + \langle \partial_i (\rho v_i'') \rangle = 0
+\]
+The average can be interchanged with the partial derivatives, therefore, we have
+\[
+\langle \partial_t \rho \rangle + \partial_i \langle \rho \tilde{v_i} \rangle + \partial_i \langle \rho v_i'' \rangle = 0
+\]
+The first term has not been interchanged for a reason. The last term is, by construction, 0. Therefore, we have
+\[
+\langle \partial_t \rho \rangle + \partial_i \langle \rho \tilde{v_i} \rangle = 0
+\]
+
+Now, note that
+\[
+\langle \partial_t \rho \rangle = \lim_{T \to \infty} \frac{1}{T} \int_0^T \pdv{\rho}{t} \, dt = \lim_{T \to \infty} \frac{1}{T} \left[ \rho \right]{}_{0}^{T} = \lim_{T \to \infty} \frac{1}{T} \left( \rho(x, y, z, T) - \rho(x, y, z, 0) \right)
+\]
+We assume that the density does not diverge to infinity as time tends to infinity. The second term is a constant in time. Therefore, the above terms drop to zero.
+Thus, we have
+\[\partial_i \langle \rho \tilde{v_i} \rangle = 0\]
+
+To verify this, we can explicitly calculate the term
+\[
+\langle \rho \tilde{v_i} \rangle = \tilde{v_i} \langle \rho \rangle = \frac{\langle \rho v_i \rangle}{\langle \rho \rangle} \langle \rho \rangle = \langle \rho v_i \rangle
+\]
+But since the original continuity equation holds, we have
+\[
+\partial_i \langle \rho v_i \rangle = 0
+\]
+
+Therefore, the decomposition is a valid one and agrees with the continuity equation.
+
+\subsection{Energy dissipation in turbulence}
+Turbulent flows are characterised by their high energy dissipation. Consider a kinetic energy quantity for turbulent flows. This quantity is only dependent on the fluctation field. However, first we define the total kinetic energy per unit volume to be
+\[
+E = \frac{1}{2} \rho v_i v_i
+\]
+taking the average, we have, from (18.7.2)
+\[
+\langle E \rangle = \frac{1}{2} \langle \rho \rangle \tilde{v_i} \tilde{v_i} + \frac{1}{2} \langle \rho v_i'' v_i'' \rangle
+\]
+From the property of the average, we have
+\[
+\langle \rho v_i'' v_i'' \rangle = \langle \rho \rangle \widetilde{v_i'' v_i''}
+\]
+Therefore, we have a final expression for the kinetic energy. Note that one of the terms is only dependent on the averaged velocity and the other is only dependent on the fluctation field. Our interest lies in the second term. Therefore, define the turbulent kinetic energy to be
+\[
+K = \frac{1}{2} \langle \rho \rangle \widetilde{v_i'' v_i''} \tag{18.8.1}
+\]
+and the specific turbulent kinetic energy to be
+\[k = \frac{K}{\langle \rho \rangle} = \frac{1}{2} \widetilde{v_i'' v_i''} \tag{18.8.2}\]
+
+It is worth noting that
+\[
+K = \frac{1}{2} \delta_{ij} T_{ij}
+\]
+where $T_{ij}$ is the $ij$-th element of the turbulence stress tensor defined in (18.7.3) and $\delta_{ij}$ is the Kronecker delta.
+
+We wish to find the evolution equation for the turbulent kinetic energy. Therefore, we can use the following equation
+\[
+\fdv{K} = \fdv{(\langle \rho \rangle k)} = \langle \rho \rangle \fdv{k} + k \fdv{\langle \rho \rangle}
+\]
+
+The evolution equation for $k$ is as follows:
+\begin{align*}
+\fdv{k} &= \frac{1}{2} \partial_t (\widetilde{v_i'' v_i''}) + \frac{1}{2} v_j \partial_j (\widetilde{v_i'' v_i''}) \\
+&= \frac{1}{2} \partial_t (\widetilde{v_i'' v_i''}) + \frac{1}{2} \tilde{v_j} \partial_j (\widetilde{v_i'' v_i''}) + \frac{1}{2} v_j'' \partial_j (\widetilde{v_i'' v_i''}) \\
+\end{align*}
+The first to terms on the right hand side can be rewritten as another operator, that is, the ``average'' of the field derivative. Therefore, we have
+\[
+\tilde{\fdv{}} \equiv \partial_t + \tilde{v_j} \partial_j
+\]
+Therefore, we have
+\[
+\fdv{k} = \tilde{\fdv{k}} + \frac{1}{2} v_j'' \partial_j (\widetilde{v_i'' v_i''})
+\]
+
+Let us first calculate the term $\tilde{\fdv{k}}$. Note that the first term is just the partial derivative of an already time averaged quantity, which is independent of time. Therefore, we get
+\[
+\tilde{\fdv{k}} = \frac{1}{2} \tilde{v_j} \partial_j (\widetilde{v_i'' v_i''})
+\]
+
+\section{Mixing}
+Something that has occured to me while looking at actual movement of fluids is that turbulent flow have layers of the velocity field which mix with each other. One way to think of this is that the velocity field has vorticity. However, this does not capture the entire picture. Even laminar flow can have nonzero vorticity.
+
+Consider the example of couette flow in a cylinder. A fluid is present in an infinite cylinder of radius \(R\) and the cylinder is rotated with angular velocity \(\omega\). The velocity at the boundary is \(u\). Assume also that the outer part of the fluid is behaving like a rigid body. It is not even required to solve the force equation. Rather, a few arguments would be enough. It is possible to use the fact that the flow is occuring due to the rotation of the cylinder alone. Since the angular velocity of the flow must be constant, the flow profile must be
+\begin{gather*}
+    \omega(r) = \omega(R) \\
+    \implies \frac{v(r)}{r} = \frac{u}{R} \\
+    \implies v(r) = \frac{u r}{R}
+\end{gather*}
+
+This takes care of only the magnitude. The direction is given by the fact that the angular velocity is present only along the rotation axis. Which only implies that the velocity is along the tangential direction. Therefore, the velocity field for this situation is given by:
+\[
+\vec{v(r)} = u \frac{r}{R} \hat{\theta}
+\]
+Taking the curl of this, we get
+\[
+\vec{w} = \frac{2u}{R} \hat{z}
+\]
+Or alternatively, we can use (16.4.1) to get
+\[
+\vec{w} = 2 \vec{\omega} = \frac{2u}{R} \hat{z}
+\]
+
+So, turbulence is not characterised by the presence of vorticity alone. There must be a few more criteria. One of these is that the field must be dependent on time, or in other words, there must be fluctutation field. Another criterion is that the velocity lines must mix with each other. Vorticity does not capture this to its fullest extent.
+
+It is important to note that mixing occurs when the velocity field has different layers moving with different velocities. Better said, a shear is required and this shear must not be stable (unlike the example above, which has a stable shear). Another thing that is important to note is that the mixing occurs in such a fashion that the velocity lines locally move away from the ensemble average velocity line. So, in a way, mixing is characterised by the fluctuation field.
+
+Stable shear flows do not mix. Intuitively, this is because the layers of the fluid are not moving fast enough to mix. In the language of mechanics, this implies that the inertia of the fluid is not enough to overcome the viscous forces. This is kind of similar to walking in the sense that walking fast, or even running is really easy on concrete but is hard on ice. The exact cause of fluctuations therefore requires a microscopic description. Unfortunately, treating the fluid as a continuum will not be able to explain why the fluctuations occur or even predict how they occur from first principles. Therefore, we must take the fact that fluctuations occur as a given.
+
+To start, it is required to define a velocity line. A velocity line is the path traced by a fluid particle as it moves with the flow. Mathematically, this can be represented as follows:
+\[\frac{d\vec{r}}{dt} = \vec{v}(\vec{r}, t)\]
+where \(\vec{r}\) is the position vector of the fluid particle.
 
 \printbibliography\end{document}
