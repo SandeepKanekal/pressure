@@ -1,4 +1,5 @@
 /.vscode/
+/venv/
 
 # LaTeX auxiliary files
 *.aux
