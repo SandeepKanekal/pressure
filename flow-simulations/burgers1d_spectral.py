@@ -10,6 +10,9 @@ The solution is expanded in Fourier modes and the nonlinear term is computed pse
 
 In Fourier space, the Burgers equation becomes:
     ∂û_k/∂t = -i k/2 û²_k - ν k² û_k
+
+Files: 
+- flow-simulations/videos/burgers1d_spectral.mp4
 """
 
 L = 2 * np.pi
@@ -138,4 +141,4 @@ def update(frame):
 
 nframes = int(np.ceil(tmax / (steps_per_frame * dt)))
 anim = FuncAnimation(fig, update, frames=nframes, interval=30, blit=False)
-plt.show()
+anim.save('flow-simulations/videos/burgers1d_spectral.mp4', fps=60, dpi=300)

@@ -13,6 +13,9 @@ In Fourier space, the Burgers equation becomes:
 After obtaining the velocity field, we compute strucuture functions of various orders. Defined as:
     S_p (r) = <|u(x + r) - u(x)|^p>
 where <.> denotes spatial averaging over x.
+
+Files:
+- flow-simulations/images/structure_functions_1d.png
 """
 
 L = 2 * np.pi
@@ -76,10 +79,18 @@ for i, ri in enumerate(r):
     S2[i] = np.mean(diffs**2)
     S3[i] = np.mean(diffs**3)
 
-plt.plot(r, S1, label='S1')
-plt.plot(r, S2, label='S2', color='orange')
-plt.plot(r, S3, label='S3', color='green')
+plt.loglog(r, S1, label='S1')
+plt.loglog(r, S2, label='S2', color='orange')
+plt.loglog(r, S3, label='S3', color='green')
 plt.xlabel('r')
 plt.ylabel('Structure Functions')
 plt.legend()
-plt.show()
+
+r_min = 0.1
+r_max = 1.0
+mask = (r > r_min) & (r < r_max)
+for S, name in zip([S1, S2, S3], ['S1', 'S2', 'S3']):
+    coeffs = np.polyfit(np.log(r[mask]), np.log(S[mask]), 1)
+    print(f"Scaling exponent for {name}: {coeffs[0]:.3f}")
+
+plt.savefig('structure_functions_1d.png', dpi=300)

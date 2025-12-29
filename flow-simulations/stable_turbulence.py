@@ -9,14 +9,17 @@ on a periodic domain using a Fourier-Galerkin method.
 The solution is expanded in Fourier modes and the nonlinear term is computed pseudospectrally using FFTs.
 
 In Fourier space, the Burgers equation becomes:
-    ∂û_k/∂t = -i k/2 û²_k - ν k² û_k + ˆf_k
+    ∂û_k/∂t = -i k/2 û²_k - ν k² û_k + f̂_k
 
 f injects energy at large scales to maintain a statistically steady turbulent state.
 
-\hat{f}_k is defined as:
-    \sigma \zeta_k (t) for |k| ≤ k_f
+f̂_k is defined as:
+    σ ζ_k(t) for |k| ≤ k_f
     0 otherwise
-where \zeta_k (t) is a complex Gaussian white noise process.
+where ζ_k(t) is a complex Gaussian white noise process.
+
+Files:
+- flow-simulations/videos/stable_turbulence.mp4
 """
 
 L = 2 * np.pi
@@ -194,4 +197,4 @@ def update(frame):
 
 nframes = int(np.ceil(tmax / (steps_per_frame * dt)))
 anim = FuncAnimation(fig, update, frames=nframes, interval=30, blit=False)
-plt.show()
+anim.save('flow-simulations/videos/stable_turbulence.mp4', fps=60, dpi=300)
