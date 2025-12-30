@@ -66,12 +66,18 @@ line_u, = ax[0].plot(x, np.fft.ifft(u_hat).real, lw=2, label=r"$u(x, t)$ and $\n
 line_v, = ax[0].plot(x, np.fft.ifft(v_hat).real, lw=2, color="orange", label=r"$v(x, t)$ and $\nu=0.01$")
 ax[0].set_xlim(0, L)
 ax[0].set_ylim(-1.5, 1.5)
+ax[0].set_title("Velocity Fields")
+ax[0].set_xlabel("x")
+ax[0].set_ylabel("u, v")
 ax[0].legend()
 
 # Energy plot
 line_Eu, = ax[1].plot([], [], lw=2, label=r"$E_u(t)$")
 line_Ev, = ax[1].plot([], [], lw=2, color="orange", label=r"$E_v(t)$")
 ax[1].set_xlim(0, tmax)
+ax[1].set_title("Kinetic Energies")
+ax[1].set_xlabel("t")
+ax[1].set_ylabel("E_u, E_v")
 ax[1].legend()
 
 # Dissipation and energy dissipation rate plot
@@ -79,6 +85,9 @@ line_epsu, = ax[2].plot([], [], lw=2, label=r"$\varepsilon_u(t)$")
 line_epsv, = ax[2].plot([], [], lw=2, color="orange", label=r"$\varepsilon_v(t)$")
 line_dEdu, = ax[2].plot([], [], "--", color="black", label=r"$-dE_u/dt$")
 line_dEdv, = ax[2].plot([], [], "--", color="gray", label=r"$-dE_v/dt$")
+ax[2].set_title("Dissipation Rates")
+ax[2].set_xlabel("t")
+ax[2].set_ylabel(r"$\varepsilon_u, \varepsilon_v, -dE_u/dt, -dE_v/dt$")
 ax[2].set_xlim(0, tmax)
 ax[2].legend()
 
@@ -128,9 +137,7 @@ def update(frame):
         ) * 1.1
     )
 
-    ax[0].set_title(f"t = {t:.2f}")
-    ax[1].set_title(f"t = {t:.2f}")
-    ax[2].set_title(f"t = {t:.2f}")
+    plt.suptitle(f"t = {t:.2f}")
 
     return (
         line_u, line_v,

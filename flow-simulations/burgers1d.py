@@ -15,7 +15,7 @@ L = 2 * np.pi
 N = 256
 dx = L / N
 nu = 0.01
-tmax = 20
+tmax = 50
 CFL = 0.4
 
 x = np.linspace(0, L, N, endpoint=False)
@@ -87,7 +87,7 @@ def update(frame):
 anim = FuncAnimation(
     fig,
     update,
-    frames=int(np.ceil(tmax/(5*dt))),
+    frames=480,
     interval=20,
     blit=False
 )
