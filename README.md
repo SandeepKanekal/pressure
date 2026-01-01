@@ -19,6 +19,7 @@ Pressure and Fluid Flow/
     ├── stable_turbulence.py      # Forced 1D Burgers to maintain steady turbulence; spectra and dissipation
     ├── incompressible_2D_NS.py   # 2D incompressible NS (vorticity, spectral); KE & enstrophy time series
     ├── structure_function.py     # Structure functions S1, S2, S3 with scaling exponents
+    ├── turbulence_with_linearfriction_2D.py # 2D incompressible NS with linear friction and forcing; steady-state spectra
     ├── images/                   # Optional figures
     └── videos/                   # Animation outputs (*.mp4)
 ```

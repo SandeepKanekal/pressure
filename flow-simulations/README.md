@@ -13,6 +13,7 @@ flow-simulations/
 ├── stable_turbulence.py      # Forced 1D Burgers to maintain steady turbulence; spectra and dissipation; 
 ├── structure_function.py     # Compute S1, S2, S3 structure functions from a 1D field; prints scaling exponents
 ├── incompressible_2D_NS.py   # 2D incompressible NS in vorticity form (spectral); KE/enstrophy over time; optional animation
+├── turbulence_with_linearfriction_2D.py # 2D incompressible NS with linear friction and forcing; steady-state spectra
 ├── requirements.txt          # Minimal dependencies: numpy, matplotlib
 ├── images/                   # Optional still figures
 └── videos/                   # Animation outputs (*.mp4)
@@ -52,6 +53,7 @@ Notes:
 - burgers1d_spectral.py: Fourier–Galerkin method with dealiased nonlinear term. Compares two viscosities (ν=0.02, 0.01) and tracks energy/dissipation; saves an MP4 to videos/.
 - stable_turbulence.py: Adds large-scale stochastic forcing to sustain a statistically steady state; shows velocity, energy, dissipation, spectra, and running-average dissipation; saves an MP4 to videos/.
 - incompressible_2D_NS.py: Spectral vorticity solver on a periodic square; computes kinetic energy and enstrophy in time; optional animation to videos/ (commented section).
+- turbulence_with_linearfriction_2D.py: 2D incompressible NS with linear friction and large-scale forcing; runs to steady state and plots time-averaged energy spectra.
 - structure_function.py: After evolving a 1D field, computes structure functions S_p(r)=⟨|u(x+r)−u(x)|^p⟩ for p=1,2,3, prints scaling exponents, and shows log–log plots.
 
 ## Tips

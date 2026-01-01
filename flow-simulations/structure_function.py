@@ -39,17 +39,17 @@ def main():
                 f_hat[i] = sigma * (np.random.randn() + 1j * np.random.randn())
         return f_hat
 
-    def rhs(u_hat, nu):
+    def rhs(u_hat, f_hat, nu):
         u = np.fft.ifft(u_hat).real
         u2_hat = np.fft.fft(u**2)
         u2_hat[np.abs(k) > (2 * (N // 2)) // 3] = 0
-        return -0.5j * k * u2_hat - nu * k**2 * u_hat + forcing()
-
-    def step(u_hat, dt, nu):
-        k1 = rhs(u_hat, nu)
-        k2 = rhs(u_hat + 0.5 * dt * k1, nu)
-        k3 = rhs(u_hat + 0.5 * dt * k2, nu)
-        k4 = rhs(u_hat + dt * k3, nu)
+        return -0.5j * k * u2_hat - nu * k**2 * u_hat + f_hat
+    
+    def step(u_hat, f_hat, dt, nu):
+        k1 = rhs(u_hat, f_hat, nu)
+        k2 = rhs(u_hat + 0.5 * dt * k1, f_hat, nu)
+        k3 = rhs(u_hat + 0.5 * dt * k2, f_hat, nu)
+        k4 = rhs(u_hat + dt * k3, f_hat, nu)
         return u_hat + dt * (k1 + 2*k2 + 2*k3 + k4) / 6
 
     t = 0.0
@@ -61,7 +61,7 @@ def main():
         dt_diff = CFL * dx**2 / nu
         dt = min(dt_adv, dt_diff)
 
-        u_hat = step(u_hat, dt, nu)
+        u_hat = step(u_hat, forcing(), dt, nu)
         t += dt
 
     u = np.fft.ifft(u_hat).real

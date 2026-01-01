@@ -86,9 +86,16 @@ def main():
     ax[2].set_ylabel(r"$\varepsilon_u, \varepsilon_v, -dE_u/dt, -dE_v/dt$")
     ax[2].set_xlim(0, tmax)
     ax[2].legend()
+    
+    def compute_dt(u_hat, nu):
+        u = np.fft.ifft(u_hat).real
+        umax = max(np.max(np.abs(u)), 1e-6)
+        dt_adv = CFL * dx / umax
+        dt_diff = CFL * dx**2 / nu
+        return min(dt_adv, dt_diff)
 
     def update(frame):
-        nonlocal u_hat, v_hat, t
+        nonlocal u_hat, v_hat, t, dt
 
         for _ in range(steps_per_frame):
             if t >= tmax:
@@ -96,6 +103,9 @@ def main():
 
             u_hat = step(u_hat, dt, nu1)
             v_hat = step(v_hat, dt, nu2)
+            dt_u = compute_dt(u_hat, nu1)
+            dt_v = compute_dt(v_hat, nu2)
+            dt = min(dt_u, dt_v)
             t += dt
 
             E_u.append(energy(u_hat))

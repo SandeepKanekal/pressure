@@ -2,29 +2,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-
 """
 Solve for the vorticity field in a 2D incompressible Navier-Stokes flow using a spectral method.
 
 The vorticity equation is given by:
-∂ω/∂t + u·∇ω = ν∇²ω + f
+∂ω/∂t + u·∇ω = ν∇²ω  - αω + f
 
 with the condition
 ∇·u = 0
 
 Files: 
-- flow-simulations/videos/incompressible_2D_NS.mp4
-- flow-simulations/videos/incompressible_2D_NS_velocity.mp4
-- flow-simulations/images/incompressible_2D_NS_energy_spectrum.png
-- flow-simulations/images/incompressible_2D_NS_energy_enstrophy.png
+- flow-simulations/videos/turbulence_with_linearfriction_vorticity.mp4
+- flow-simulations/videos/turbulence_with_linearfriction_velocity.mp4
+- flow-simulations/images/turbulence_with_linearfriction_energy_enstrophy.png
+- flow-simulations/images/turbulence_with_linearfriction_energy_spectrum.png
 """
 
-
-L = 2.0 * np.pi
+L = 2 * np.pi
 N = 256
 dx = L / N
-dy = L / N
-nu = 0.01
+nu = 1e-3
+alpha = 0.1
 tmax = 15
 CFL = 0.1
 
@@ -37,6 +35,7 @@ k = np.fft.fftfreq(N, d=dx) * 2 * np.pi
 kx, ky = np.meshgrid(k, k)
 k2 = kx**2 + ky**2
 k2[0, 0] = 1.0  # Avoid division by zero
+k_mag = np.sqrt(k2)
 
 ux = np.fft.ifft2(1j * ky * (-w_hat / k2)).real
 uy = np.fft.ifft2(-1j * kx * (-w_hat / k2)).real
@@ -49,18 +48,15 @@ dt = min(dt_adv, dt_diff)
 
 wmax = np.max(np.abs(w0))
 
-
 def reset_state():
     return np.fft.fft2(w0), 0.0
-
 
 def compute_dt(w_hat):
     psi_hat = -w_hat / k2
     ux = np.fft.ifft2(1j * ky * psi_hat).real
     uy = np.fft.ifft2(-1j * kx * psi_hat).real
     umax = max(np.max(np.abs(ux)), np.max(np.abs(uy)), 1e-6)
-    return min(CFL * dx / umax, CFL * dx**2 / nu)
-
+    return min(CFL * dx / umax, CFL * dx**2 / nu)   
 
 def forcing():
     f_hat = np.zeros((N, N), dtype=complex)
@@ -72,36 +68,29 @@ def forcing():
             if k_mag <= kf:
                 f_hat[i, j] = sigma * (np.random.randn() + 1j * np.random.randn())
     return f_hat
-        
 
 def rhs(w_hat, f_hat):
     psi_hat = -w_hat / k2
-    ux_hat = 1j * ky * psi_hat
-    uy_hat = -1j * kx * psi_hat
-    ux = np.fft.ifft2(ux_hat).real
-    uy = np.fft.ifft2(uy_hat).real
-    w = np.fft.ifft2(w_hat).real
+    ux = np.fft.ifft2(1j * ky * psi_hat).real
+    uy = np.fft.ifft2(-1j * kx * psi_hat).real
     dwdx = np.fft.ifft2(1j * kx * w_hat).real
     dwdy = np.fft.ifft2(1j * ky * w_hat).real
-    nonlinear_term = ux * dwdx + uy * dwdy
-    nonlinear_term_hat = np.fft.fft2(nonlinear_term)
-    nonlinear_term_hat[np.abs(kx) > (2 * (N // 2)) // 3] = 0
-    nonlinear_term_hat[np.abs(ky) > (2 * (N // 2)) // 3] = 0
-    return -nonlinear_term_hat - nu * k2 * w_hat + f_hat
-
+    advective_term = ux * dwdx + uy * dwdy
+    advective_term_hat = np.fft.fft2(advective_term)
+    advective_term_hat[np.abs(kx) > (2 * (N // 2)) // 3] = 0
+    advective_term_hat[np.abs(ky) > (2 * (N // 2)) // 3] = 0
+    return -advective_term_hat - nu * k2 * w_hat - alpha * w_hat + f_hat
 
 def step(w_hat, f_hat, dt):
-    f1 = rhs(w_hat, f_hat)
-    f2 = rhs(w_hat + 0.5 * dt * f1, f_hat)
-    f3 = rhs(w_hat + 0.5 * dt * f2, f_hat)
-    f4 = rhs(w_hat + dt * f3, f_hat)
-    return w_hat + (dt / 6) * (f1 + 2 * f2 + 2 * f3 + f4)
-
-
+    k1 = rhs(w_hat, f_hat)
+    k2 = rhs(w_hat + 0.5 * dt * k1, f_hat)
+    k3 = rhs(w_hat + 0.5 * dt * k2, f_hat)
+    k4 = rhs(w_hat + dt * k3, f_hat)
+    return w_hat + (dt / 6) * (k1 + 2 * k2 + 2 * k3 + k4)
+    
 def vorticity_simulation():
     global w_hat, t, dt
     w_hat, t = reset_state()
-    
     fig, axes = plt.subplots(figsize=(10, 10))
     im = axes.imshow(w0, origin='lower', extent=(0, L, 0, L), vmin=-wmax, vmax=wmax, cmap='RdBu')
     axes.set_xlabel('x')
@@ -122,15 +111,14 @@ def vorticity_simulation():
         title.set_text(f'Time = {t:.2f}')
         return im,
 
-    anim = FuncAnimation(fig, update, frames = int(tmax/(dt*5)), interval=50, blit=False)
-    anim.save("flow-simulations/videos/incompressible_2D_NS.mp4", fps=60, dpi=300)
+    anim = FuncAnimation(fig, update, frames = 360, interval=50, blit=False)
+    anim.save("flow-simulations/videos/turbulence_with_linearfriction_vorticity.mp4", fps=60, dpi=300)
     plt.close('all')
 
 
 def energy_enstrophy_simulation():
     global w_hat, t, dt
     w_hat, t = reset_state()
-    
     KE = []
     EN = []
     time = []
@@ -139,8 +127,8 @@ def energy_enstrophy_simulation():
         w_hat = step(w_hat, forcing(), dt)
         dt = compute_dt(w_hat)
         t += dt
-        KE.append(0.5*np.sum(np.abs(w_hat)**2 / k2) * dx * dy)
-        EN.append(0.5*np.sum(np.abs(w_hat)**2) * dx * dy)
+        KE.append(0.5*np.sum(np.abs(w_hat)**2 / k2) * dx**2)
+        EN.append(0.5*np.sum(np.abs(w_hat)**2) * dx**2)
         time.append(t)
 
     plt.plot(time, KE, label='Kinetic Energy')
@@ -149,9 +137,8 @@ def energy_enstrophy_simulation():
     plt.ylabel('Value')
     plt.legend()
     plt.title('Kinetic Energy and Enstrophy over Time')
-    plt.savefig('flow-simulations/images/incompressible_2D_NS_energy_enstrophy.png', dpi=300)
+    plt.savefig('flow-simulations/images/turbulence_with_linearfriction_energy_enstrophy.png', dpi=300)
     plt.close('all')
-
 
 def velocity_simulation():
     global w_hat, t, dt
@@ -188,10 +175,11 @@ def velocity_simulation():
         uy_data.append(uy)
         im_ux.set_data(ux)
         im_uy.set_data(uy)
+        plt.suptitle(f'Time = {t:.2f}')
         return im_ux, im_uy
 
-    anim = FuncAnimation(fig, update, frames = int(tmax/(dt*5)), interval=50, blit=False)
-    anim.save("flow-simulations/videos/incompressible_2D_NS_velocity.mp4", fps=60, dpi=300)
+    anim = FuncAnimation(fig, update, frames = 360, interval=50, blit=False)
+    anim.save("flow-simulations/videos/turbulence_with_linearfriction_velocity.mp4", fps=60, dpi=300)
     plt.close('all')
 
 
@@ -231,12 +219,12 @@ def energy_spectrum_simulation():
     plt.ylabel(r"Kinetic Energy Spectrum $E(k)$")
     plt.title("Steady-State Energy Spectrum")
     plt.grid(True, which="both", ls="--", alpha=0.3)
-    plt.savefig("flow-simulations/images/incompressible_2D_NS_energy_spectrum.png", dpi=300)
+    plt.savefig("flow-simulations/images/turbulence_with_linearfriction_energy_spectrum.png", dpi=300)
     plt.close('all')
-
+    
 
 if __name__ == "__main__":
-    vorticity_simulation()
-    energy_enstrophy_simulation()
-    velocity_simulation()
-    energy_spectrum_simulation()
+    # vorticity_simulation()
+    # energy_enstrophy_simulation()
+    velocity_simulation()   
+    # energy_spectrum_simulation()
